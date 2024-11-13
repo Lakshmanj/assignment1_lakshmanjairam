@@ -1,7 +1,6 @@
 import React from 'react';
 import { deleteCourse } from '../api';
 
-
 function CourseList({ courses }) {
   const handleDelete = async (id) => {
     try {
@@ -12,6 +11,10 @@ function CourseList({ courses }) {
     }
   };
 
+  if (!Array.isArray(courses)) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <h2>Course List</h2>
@@ -21,7 +24,13 @@ function CourseList({ courses }) {
         <ul>
           {courses.map((course) => (
             <li key={course.id}>
-              <strong>{course.name}</strong> - Department: {course.department} - Status: {course.isOpen ? "Open" : "Closed"}
+              {course?.name ? (
+                <strong>{course.name}</strong>
+              ) : (
+                <span>Unnamed Course</span>
+              )}
+              <span> - Department: {course.department ? course.department : 'Unknown'}</span>
+              <span> - Status: {course.isOpen ? 'Open' : 'Closed'}</span>
               <button onClick={() => handleDelete(course.id)}>Delete</button>
             </li>
           ))}

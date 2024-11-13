@@ -11,7 +11,7 @@ const api = axios.create({
 
 export const getStudents = async () => {
   try {
-    const response = await api.get('/students');
+    const response = await api.get('/api/students');
     return response.data;
   } catch (error) {
     console.error('Error fetching students:', error);
@@ -21,7 +21,7 @@ export const getStudents = async () => {
 
 export const addStudent = async (student) => {
   try {
-    const response = await api.post('/students', student);
+    const response = await api.post('/api/students', student);
     return response.data;
   } catch (error) {
     console.error('Error adding student:', error);
@@ -31,7 +31,7 @@ export const addStudent = async (student) => {
 
 export const deleteStudent = async (id) => {
   try {
-    const response = await api.delete(`/students/${id}`);
+    const response = await api.delete(`/api/students/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting student:', error);
@@ -41,7 +41,7 @@ export const deleteStudent = async (id) => {
 
 export const updateStudent = async (id, updatedData) => {
   try {
-    const response = await api.put(`/students/${id}`, updatedData);
+    const response = await api.put(`/api/students/${id}`, updatedData);
     return response.data;
   } catch (error) {
     console.error('Error updating student:', error);
@@ -51,7 +51,7 @@ export const updateStudent = async (id, updatedData) => {
 
 export const getCourses = async () => {
   try {
-    const response = await api.get('/courses');
+    const response = await api.get('/api/courses');
     return response.data;
   } catch (error) {
     console.error('Error fetching courses:', error);
@@ -61,7 +61,7 @@ export const getCourses = async () => {
 
 export const addCourse = async (course) => {
   try {
-    const response = await api.post('/courses', course);
+    const response = await api.post('/api/courses', course);
     return response.data;
   } catch (error) {
     console.error('Error adding course:', error);
@@ -71,7 +71,7 @@ export const addCourse = async (course) => {
 
 export const deleteCourse = async (id) => {
   try {
-    const response = await api.delete(`/courses/${id}`);
+    const response = await api.delete(`/api/courses/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting course:', error);
@@ -81,7 +81,7 @@ export const deleteCourse = async (id) => {
 
 export const updateCourse = async (id, updatedData) => {
   try {
-    const response = await api.put(`/courses/${id}`, updatedData);
+    const response = await api.put(`/api/courses/${id}`, updatedData);
     return response.data;
   } catch (error) {
     console.error('Error updating course:', error);

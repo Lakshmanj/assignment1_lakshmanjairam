@@ -14,16 +14,19 @@ function AddStudent({ onAdd }) {
         setError('All fields are required');
         return;
       }
+
       const newStudent = { name, department, semester };
       const response = await addStudent(newStudent);
-      onAdd(response.data); 
+
+      onAdd(response.data);
+
       setName('');
       setDepartment('');
       setSemester('');
-      setError(''); 
+      setError('');
     } catch (err) {
-      setError('Failed to add student. Please try again.');
-      console.error(err);
+      setError(err.response?.data?.message || 'Failed to add student. Please try again.');
+      console.error('Error:', err);
     }
   };
 

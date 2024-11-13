@@ -16,16 +16,16 @@ function AddCourse({ onAdd }) {
       }
       const newCourse = { name, department, isOpen };
       const response = await addCourse(newCourse);
-      onAdd(response.data); 
+      onAdd(response.data);
       setName('');
       setDepartment('');
       setIsOpen(true);
-      setError(''); 
+      setError('');
     } catch (err) {
-      setError('Failed to add course. Please try again.');
-      console.error(err);
+      setError(err.response?.data?.message || 'Failed to add course. Please try again.');
+      console.error('Error:', err);
     }
-  };
+  };  
 
   return (
     <form onSubmit={handleSubmit} className="course-form">

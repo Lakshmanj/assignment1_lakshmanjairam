@@ -1,35 +1,62 @@
-// client/src/components/StudentList.js
-import React from 'react';
-import { deleteStudent } from '../api';
+import React, { useState, useEffect } from 'react';
+import { getStudents } from '../api';
 
-function StudentList({ students, onDelete }) {
-  const handleDelete = async (id) => {
-    try {
-      await deleteStudent(id);
-      onDelete(id); // Remove the student from the list
-      alert('Student deleted successfully');
-    } catch (error) {
-      alert('Failed to delete student. Please try again.');
-    }
-  };
+const StudentList = () => {
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const data = await getStudents();
+        setStudents(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+        setError('Failed to fetch students');
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (students.length === 0) {
+    return <div>No students available.</div>;
+  }
 
   return (
     <div>
       <h2>Student List</h2>
-      {students.length === 0 ? (
-        <p>No students available</p>
-      ) : (
-        <ul>
-          {students.map((student) => (
-            <li key={student.id}>
-              <strong>{student.name}</strong> - {student.department}, Semester: {student.semester}
-              <button onClick={() => handleDelete(student.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {students.map((student) => (
+          <li key={student.id}>
+            <strong>{student.name}</strong>
+            <ul>
+              <li>ID: {student.id}</li>
+              <li>Department: {student.department}</li>
+              <li>Semester: {student.semester}</li>
+              <li>
+                Enrolled Courses: {student.enrolledCourses.length > 0 ? student.enrolledCourses.join(', ') : 'None'}
+              </li>
+              <li>
+                Completed Courses: {student.completedCourses.length > 0 ? student.completedCourses.join(', ') : 'None'}
+              </li>
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
 export default StudentList;
